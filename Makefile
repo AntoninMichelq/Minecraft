@@ -1,6 +1,6 @@
 CC     = gcc
 SRC    = main.c
-CFLAGS = -Wall -std=c99
+CFLAGS = -Wall -std=c99 -Iraylib/src
 
 ifeq ($(OS),Windows_NT)
     TARGET = jeu.exe
