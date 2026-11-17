@@ -19,7 +19,7 @@ void loadMap(Model* load_tab, size_t size, Texture2D* texture, Mesh mesh_cube) {
             load_tab[i * size + j].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture[0];
         }
     }
-}
+} // a enlever
 
 void unloadMap(Model* load_tab, size_t size) {
     for(size_t i = 0; i < size; i++) { 
@@ -53,7 +53,6 @@ int main(void)
     
     loadMap(map, SIZEMAP, texture, mesh_cube); 
 
-    SetTargetFPS(60);
     DisableCursor();
 
     bool isOnFloor() {
@@ -65,6 +64,7 @@ int main(void)
 
     while (!WindowShouldClose())
     {
+        SetTargetFPS(240);
         float deltaTime = GetFrameTime();
         UpdateCamera(&camera, CAMERA_FIRST_PERSON);
         
@@ -73,8 +73,11 @@ int main(void)
            camera.target.y += deltaTime*GRAVITY;
         }
         if(IsKeyPressed(KEY_SPACE) && isOnFloor()) {
-          camera.position.y += JUMP_HEIGHT;
-          camera.target.y += JUMP_HEIGHT;
+            float jumpPos = camera.position.y += JUMP_HEIGHT;
+            while(camera.position.y <= jumpPos) {
+              camera.position.y += JUMP_HEIGHT*deltaTime;
+              camera.target.y += JUMP_HEIGHT*deltaTime;
+            }
           //mouvement animation tant que pas +=2
         }
         BeginDrawing();
@@ -96,6 +99,7 @@ int main(void)
             //COORD
             DrawText(TextFormat("x: %02.02f, y: %02.02f, z: %02.02f", camera.position.x, camera.position.y, camera.position.z), 50, 10, 25, BLACK);
 
+           
         EndDrawing();
     }
     
