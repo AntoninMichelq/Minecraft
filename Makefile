@@ -13,7 +13,7 @@ else
     PLAT    = linux
     TARGET  = jeu
     LIBS    = -lGL -lm -lpthread -ldl -lrt -lX11
-    RLEXTRA = -D_GNU_SOURCE
+    RLEXTRA = -D_GNU_SOURCE -D_GLFW_X11
 endif
 
 BUILD   = build/$(PLAT)
