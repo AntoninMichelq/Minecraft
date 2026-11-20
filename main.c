@@ -56,16 +56,17 @@ int main(void)
     for(int x = 0; x < X_SIZE; x++) {
         for(int y = 0; y < Y_SIZE; y++) {
             for(int z = 0; z < Z_SIZE; z++) {
+                int val = rand() % 2;
                 if( y == 49 ) {
                     map[x][y][z] = GRASS;
-                } else if(y < 50 && y >= 40) {
+                } else if(y < 50 && y >= 40 ) {
                     map[x][y][z] = DIRT;
-                } else if(y < 40 && y > 0) {
+                } else if(y < 40 && y > 0 ) {
                     map[x][y][z] = STONE;
                 } else {
                     map[x][y][z] = AIR;
                 }
-            }
+           }
         }
     }
    
