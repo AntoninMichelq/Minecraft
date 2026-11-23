@@ -24,6 +24,7 @@ typedef struct {
     char* name;
     Texture texture;
 } Bloc;
+// define ou static ?
 
 typedef struct {
     Vector3 velocity;
@@ -31,6 +32,24 @@ typedef struct {
 } Player;
 
 static int map[X_SIZE][Y_SIZE][Z_SIZE];
+
+void create_map() { //futur prend un seed puis gen procedural  8 chunk autour du joueur charge decharge
+    for(int x = 0; x < X_SIZE; x++) {
+        for(int y = 0; y < Y_SIZE; y++) {
+            for(int z = 0; z < Z_SIZE; z++) {
+                if( y == 49 && x <= 16 && z <= 16) {
+                    map[x][y][z] = GRASS;
+                } else if(y < 49 && y >= 40 && x <= 16 && z <= 16) {
+                    map[x][y][z] = DIRT;
+                } else if(y < 40 && y > 0 && x <= 16 && z <= 16) {
+                    map[x][y][z] = STONE;
+                } else {
+                    map[x][y][z] = AIR;
+                }
+           }
+        }
+    }
+}
 
 int getBlock(int x, int y, int z) {
     int block = -1;
@@ -71,22 +90,8 @@ int main(void)
     camera.projection = CAMERA_PERSPECTIVE;
     
     //un objet bloc peut etre avec name id etc
-    for(int x = 0; x < X_SIZE; x++) {
-        for(int y = 0; y < Y_SIZE; y++) {
-            for(int z = 0; z < Z_SIZE; z++) {
-                if( y == 49 && x <= 16 && z <= 16) {
-                    map[x][y][z] = GRASS;
-                } else if(y < 49 && y >= 40 && x <= 16 && z <= 16) {
-                    map[x][y][z] = DIRT;
-                } else if(y < 40 && y > 0 && x <= 16 && z <= 16) {
-                    map[x][y][z] = STONE;
-                } else {
-                    map[x][y][z] = AIR;
-                }
-           }
-        }
-    }
-   
+    create_map();
+      
     Texture2D texture[3];
     
     Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
